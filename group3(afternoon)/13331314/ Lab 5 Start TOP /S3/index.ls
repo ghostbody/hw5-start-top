@@ -12,14 +12,19 @@ $ ->
 	icon.mouseover !->
 		initial-atplus!
 
-			
+	icon.click !->
+		robot3!
+
+robot3 = !->
+	buttons = $ '#control-ring li'
+	for the-button in buttons
+		the-button.click!
+
+
 click-on-a-button = (the-button) !->
-	disable = $ the-button .attr "state"
-	if disable isnt "disable" and disable isnt "clicked"
-		display-the-red-badge the-button
-		disable-all-other-buttons the-button
-		get-number-from-the-server the-button
-		$ the-button .attr "state" "clicked"
+	display-the-red-badge the-button
+	get-number-from-the-server the-button
+	$ the-button .attr "state" "clicked"
 
 display-the-red-badge = (the-button) !->
 	badge = $ the-button .children '.unread'
@@ -39,6 +44,8 @@ get-number-from-the-server = (the-button) ->
 		$ the-button .children '.unread' .html data
 		enable-other-buttons the-button
 		$ the-button .css "background-color" "#7E7E7E"
+		bubble = $ '#info-bar'
+		bubble.click!
 
 enable-other-buttons = (the-button) !->
 	buttons = $ '#control-ring li'

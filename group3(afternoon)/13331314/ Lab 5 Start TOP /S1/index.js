@@ -2,14 +2,18 @@
 (function(){
   var clickOnAButton, displayTheRedBadge, disableAllOtherButtons, getNumberFromTheServer, enableOtherButtons, clickOnTheBubble, initialAtplus;
   $(function(){
-    var buttons, bubble;
+    var buttons, bubble, icon;
     buttons = $('#control-ring li');
     bubble = $('#info-bar');
+    icon = $('.apb');
     buttons.click(function(){
       clickOnAButton(this);
     });
-    return bubble.click(function(){
+    bubble.click(function(){
       clickOnTheBubble(bubble);
+    });
+    return icon.mouseover(function(){
+      initialAtplus();
     });
   });
   clickOnAButton = function(theButton){
@@ -63,21 +67,26 @@
     }
   };
   clickOnTheBubble = function(bubble){
-    var sumArea, sum, i$, ref$, len$, button;
-    sumArea = $('sum');
+    var sumArea, sum, numbers, i$, len$, number;
+    sumArea = $('.sum');
     sum = 0;
-    for (i$ = 0, len$ = (ref$ = buttons).length; i$ < len$; ++i$) {
-      button = ref$[i$];
-      if ($(button).html === "" || $(button).html === "...") {
-        return;
+    numbers = $(".unread");
+    for (i$ = 0, len$ = numbers.length; i$ < len$; ++i$) {
+      number = numbers[i$];
+      if ($(number).html() !== "" || $(number).html() !== "...") {
+        sum += parseInt($(number).html());
       }
-      sum += parseInt($(button).children('.unread').html());
     }
-    sumArea.html = sum;
+    sumArea.html(sum);
   };
   initialAtplus = function(){
-    if (this.mouseOutofAtplus()) {
-      this.resetEverything();
-    }
+    var bubble, badge, buttons;
+    bubble = $('.sum');
+    badge = $('.unread');
+    buttons = $('#control-ring li');
+    $(buttons).attr("state", "");
+    $(buttons).css("background-color", "#192E89");
+    badge.css('display', 'none').html('');
+    bubble.html('');
   };
 }).call(this);
